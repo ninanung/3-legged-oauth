@@ -54,4 +54,12 @@ router.get('/app', function(req, res, next) {
     return res.send('Authorization failed. Please, check the app you try to authorize is really safe.');
 })
 
+router.get('/token', function(req, res, next) {
+    const query = req.query;
+    const auth = query.auth;
+    const client_id = query.client_id;
+    const redirect_url = query.redirect_url;
+    const client = query.secret;
+});
+
 module.exports = router;
