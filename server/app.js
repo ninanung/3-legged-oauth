@@ -4,6 +4,9 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
+const auth = require('./API/auth');
+const get = require('./API/get');
+
 const connectHistoryApiFallback = require('connect-history-api-fallback');
 const bodyParser = require('body-parser');
 
@@ -20,6 +23,9 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 // app.use(express.static(path.join(__dirname, 'build')));
+
+app.use('/api/auth', auth);
+app.use('/api/get', get);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
