@@ -1,2 +1,3 @@
 # 3-legged-oauth
-implement 3 legged OAuth my own 
+
+There're two branches in this repository. One is Application, another one is API. You need both server to use this project.
