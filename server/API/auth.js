@@ -7,7 +7,7 @@ const rs = require('randomstring');
 function login(username, password) {
     for(let user of database.users) {
         if(user.username === username && user.password === password) {
-            return user.id;
+            return user.user_id;
         }
     }
     return false;
@@ -17,15 +17,14 @@ router.get('/account', function(req, res, next) {
     const query = req.query;
     const username = query.username;
     const password = query.password;
-    const auth = rs.generate();
 
-    let id = login(username, password);
+    let user_id = login(username, password);
     let sendData = {
-        id: '',
+        user_id: '',
         error: '',
     }
-    if(id) {
-        sendData.id = id;
+    if(user_id) {
+        sendData.user_id = user_id;
         return res.send(sendData);
     }
     sendData.error = 'Authorization failed. There\'s no account matched with that Username and Password';
@@ -34,32 +33,55 @@ router.get('/account', function(req, res, next) {
 
 router.get('/app', function(req, res, next) {
     const query = req.query;
-    const id = query.id;
+    const user_id = query.user_id;
     const client_id = query.client_id;
     const redirect_url = query.redirect_url;
     const scope = query.scope;
-    const auth = rs.generate();
+    const state = query.state;
 
     for(let i in database.apps) {
         const app = database.apps[i];
         if(app.client_id === client_id && app.redirect_url === redirect_url) {
-            database.apps[i].user.push({
-                id,
-                scope,
-                auth,
+            const code = rs.generate();
+            database.apps[i].registered_user_ids.push({
+                user_id,
+                scope
             })
+            database.states.push({
+                state,
+                user_id,
+                code,
+            })
+            return res.redirect(`${redirect_url}?code=${code}&state=${state}`);
         }
-        return res.redirect(`${redirect_url}?auth=${auth}`);
     }
-    return res.send('Authorization failed. Please, check the app you try to authorize is really safe.');
+    return res.send('Authorization failed. Please, check the app you try to codeorize is really safe.');
 })
 
 router.get('/token', function(req, res, next) {
     const query = req.query;
-    const auth = query.auth;
+    const code = query.code;
+    const state = query.state;
     const client_id = query.client_id;
     const redirect_url = query.redirect_url;
-    const client = query.secret;
+    const client_secret = query.secret;
+    for(let app of database.apps) {
+        if(app.client_id === client_id && app.redirect_url === redirect_url && app.client_secret === client_secret) {
+            for(let onestate of database.states) {
+                if(onestate.state === state && onestate.code === code) {
+                    const token = rs.generate()
+                    database.push({
+                        token,
+                        client_id,
+                        user_id
+                    })
+                    return res.send(token);
+                }
+            }
+        }
+    }
+    // error code and message
+    return res.send('')
 });
 
 module.exports = router;
