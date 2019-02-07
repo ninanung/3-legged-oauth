@@ -10,7 +10,17 @@ const get = require('./API/get');
 const connectHistoryApiFallback = require('connect-history-api-fallback');
 const bodyParser = require('body-parser');
 
-var app = express();
+const session = require('express-session');
+const FileStore = require('session-file-store')(session);
+
+const app = express();
+
+app.use(session({
+  secret: 'some secret',  // 암호화
+  resave: false,
+  saveUninitialized: true,
+  store: new FileStore()
+}));
 
 // view engine setup
 app.set('view engine', 'html');

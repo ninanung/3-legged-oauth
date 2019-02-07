@@ -47,18 +47,8 @@ const apps = [];
 */
 const tokens = [];
 
-/*
-{
-    state: '', unique
-    user_id: '',
-    code: '',
-}
-*/
-const states = [];
-
 module.exports = {
     users,
     apps,
     tokens,
-    states,
 }

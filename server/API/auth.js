@@ -27,7 +27,7 @@ router.get('/account', function(req, res, next) {
         sendData.user_id = user_id;
         return res.send(sendData);
     }
-    sendData.error = 'Authorization failed. There\'s no account matched with that Username and Password';
+    sendData.error = 'Authorization failed. There\'s no account matched with Username and Password';
     return res.send(sendData);
 });
 
@@ -47,11 +47,7 @@ router.get('/app', function(req, res, next) {
                 user_id,
                 scope
             })
-            database.states.push({
-                state,
-                user_id,
-                code,
-            })
+            res.cookie('state', state); 
             return res.redirect(`${redirect_url}?code=${code}&state=${state}`);
         }
     }
@@ -67,21 +63,19 @@ router.get('/token', function(req, res, next) {
     const client_secret = query.secret;
     for(let app of database.apps) {
         if(app.client_id === client_id && app.redirect_url === redirect_url && app.client_secret === client_secret) {
-            for(let onestate of database.states) {
-                if(onestate.state === state && onestate.code === code) {
-                    const token = rs.generate()
-                    database.push({
-                        token,
-                        client_id,
-                        user_id
-                    })
-                    return res.send(token);
-                }
+            if(req.cookies.state === state) {
+                const token = rs.generate()
+                database.tokens.push({
+                    token,
+                    client_id,
+                    user_id
+                })
+                res.clearCookie('state');
+                return res.send(token);
             }
         }
     }
-    // error code and message
-    return res.send('')
+    return res.status(401).send({error: 'invalid request'});
 });
 
 module.exports = router;
