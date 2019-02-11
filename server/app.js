@@ -6,6 +6,7 @@ var logger = require('morgan');
 
 const auth = require('./API/auth');
 const get = require('./API/get');
+const index = require('./API/index');
 
 const connectHistoryApiFallback = require('connect-history-api-fallback');
 const bodyParser = require('body-parser');
@@ -34,6 +35,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 // app.use(express.static(path.join(__dirname, 'build')));
 
+app.use('/', index);
 app.use('/api/auth', auth);
 app.use('/api/get', get);
 
