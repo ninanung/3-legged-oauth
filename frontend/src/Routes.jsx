@@ -7,18 +7,18 @@ import Register from './components/Register.jsx';
 import Login from './components/Login.jsx';
 import NotFound from './components/NotFound.jsx';
 
-class Router extends React.Component {
+class Routes extends React.Component {
     render() {
         return (
             <Switch>
-                <Route path='/' exaxt={true} component={Home}/>
-                <Route path='/auth' exaxt={true} component={Auth}/>
-                <Route path='/app/register' exaxt={true} component={Register}/>
-                <Route path='/login' exaxt={true} component={Login}/>
-                <Route path='*' component={NotFound}/>
+                <Route path='/' exact={true} component={Home}/>
+                <Route path='/auth' exact={true} component={Auth}/>
+                <Route path='/register' exact={true} component={Register}/>
+                <Route path='/login' exact={true} component={Login}/>
+                <Route component={NotFound}/>
             </Switch>
         )
     }
 }
 
-export default Router;
+export default Routes;

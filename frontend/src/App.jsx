@@ -1,13 +1,10 @@
 import React from 'react';
-import Router from './Router.jsx';
-import {BrowserRouter} from 'react-router-dom';
+import RouterRoot from './RouterRoot.jsx';
 
 class App extends React.Component {
     render() {
         return (
-            <BrowserRouter>
-                <Router/>
-            </BrowserRouter>
+            <RouterRoot/>
         )
     }
 }
