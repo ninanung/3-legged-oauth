@@ -11,20 +11,19 @@ class Login extends React.Component {
         }
     }
 
-    onUsernameChange(e) {
+    onUsernameChange = (e) => {
         this.setState({
             username: e.target.value,
         })
     }
 
-    onPasswordChange(e) {
+    onPasswordChange = (e) => {
         this.setState({
             password: e.target.value,
         })
     }
 
-    onButtonClick() {
-        console.log(this.state);
+    onButtonClick = () => {
         axios({
             method: 'post',
             data: {
@@ -35,6 +34,7 @@ class Login extends React.Component {
         })
         .then(function(res) {
             cookie.setCookie('user_id', res.data, 3);
+            window.location.href = '/';
         })
         .catch(function(err) {
             alert(err);

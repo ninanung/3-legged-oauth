@@ -10,19 +10,19 @@ class Register extends React.Component {
         }
     }
 
-    onAppnameChange(e) {
+    onAppnameChange = (e) => {
         this.setState({
             appname: e.target.value,
         })
     }
 
-    onRedirectUrlChange(e) {
+    onRedirectUrlChange = (e) => {
         this.setState({
             redirect_url: e.target.value,
         })
     }
 
-    onButtonClick() {
+    onButtonClick = () => {
         axios({
             method: 'post',
             data: {
