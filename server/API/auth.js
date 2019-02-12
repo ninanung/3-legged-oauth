@@ -38,7 +38,8 @@ router.get('/app', function(req, res, next) {
                 user_id,
                 scope
             })
-            res.cookie('state', state); 
+            res.cookie('state', state);
+            res.cookie('code', code);
             return res.redirect(`${redirect_url}?code=${code}&state=${state}`);
         }
     }
@@ -54,7 +55,7 @@ router.get('/token', function(req, res, next) {
     const client_secret = query.secret;
     for(let app of database.apps) {
         if(app.client_id === client_id && app.redirect_url === redirect_url && app.client_secret === client_secret) {
-            if(req.cookies.state === state) {
+            if(req.cookies.state === state && req.cookies.code === code) {
                 const token = rs.generate()
                 database.tokens.push({
                     token,
@@ -62,6 +63,7 @@ router.get('/token', function(req, res, next) {
                     user_id
                 })
                 res.clearCookie('state');
+                res.clearCookie('code');
                 return res.send(token);
             }
         }

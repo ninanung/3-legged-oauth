@@ -45,8 +45,10 @@ class Register extends React.Component {
                 <h1>Register Your App</h1>
                 <label>App Name</label>
                 <input type='text' onChange={this.onAppnameChange} />
+                <br/>
                 <label>Redirect URL</label>
                 <input type='text' onChange={this.onRedirectUrlChange}/>
+                <br/>
                 <button onClick={this.onButtonClick}>Create</button>
             </div>
         )

@@ -13,7 +13,7 @@ class Home extends React.Component {
             <div>
                 <h1>Sample Service</h1>
                 <h2>This is sample service home page.</h2> 
-                <Link to='/register'>Register App</Link>
+                <button><Link to='/register'>Register App</Link></button>
                 <button onClick={this.logout}>Logout</button>
             </div>
         )

@@ -1,12 +1,10 @@
 import React from 'react';
+import queryString from 'query-string';
 
 class Auth extends React.Component {
-    render() {
-        return (
-            <div>
-                <h1>Auth</h1>
-            </div>
-        )
+    componentWillMount() {
+        const query = queryString.parser(window.location.search);
+        console.log(query);
     }
 }
 

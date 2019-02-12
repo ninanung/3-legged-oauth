@@ -1,6 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import cookie from '../cookie';
+import queryString from 'query-string';
 
 class Login extends React.Component {
     constructor(props) {
@@ -24,6 +25,7 @@ class Login extends React.Component {
     }
 
     onButtonClick = () => {
+        const query = queryString.parse(window.location.search);
         axios({
             method: 'post',
             data: {
@@ -34,6 +36,9 @@ class Login extends React.Component {
         })
         .then(function(res) {
             cookie.setCookie('user_id', res.data, 3);
+            if(query.client_id && query.state && query.redirect_url && query.scope) {
+                window.location.href = `/auth?client_id=${query.clent_id}&state=${query.state}&scope=${query.scope}&redirect_url=${query.redirect_url}`;
+            }
             window.location.href = '/';
         })
         .catch(function(err) {
@@ -47,8 +52,10 @@ class Login extends React.Component {
                 <h1>Login</h1>
                 <label>Username</label>
                 <input type='text' onChange={this.onUsernameChange}/>
+                <br/>
                 <label>Password</label>
                 <input type='password' onChange={this.onPasswordChange}/>
+                <br/>
                 <button onClick={this.onButtonClick}>Login</button>
             </div>
         )
