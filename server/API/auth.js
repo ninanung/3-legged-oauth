@@ -4,21 +4,12 @@ const functions = require('../functions');
 const database = require('../database');
 const rs = require('randomstring');
 
-function login(username, password) {
-    for(let user of database.users) {
-        if(user.username === username && user.password === password) {
-            return user.user_id;
-        }
-    }
-    return false;
-}
-
 router.get('/account', function(req, res, next) {
     const query = req.query;
     const username = query.username;
     const password = query.password;
 
-    let user_id = login(username, password);
+    let user_id = functions.login(username, password);
     let sendData = {
         user_id: '',
         error: '',

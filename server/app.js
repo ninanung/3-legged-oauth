@@ -7,6 +7,7 @@ var logger = require('morgan');
 const auth = require('./API/auth');
 const get = require('./API/get');
 const index = require('./API/index');
+const sign = require('./API/sign');
 
 const connectHistoryApiFallback = require('connect-history-api-fallback');
 const bodyParser = require('body-parser');
@@ -38,6 +39,7 @@ app.use(express.static(path.join(__dirname, 'build')));
 app.use('/', index);
 app.use('/api/auth', auth);
 app.use('/api/get', get);
+app.use('/api/sign', sign);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
