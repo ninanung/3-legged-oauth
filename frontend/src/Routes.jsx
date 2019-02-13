@@ -10,22 +10,22 @@ import MainLogin from './components/MainLogin.jsx';
 import NotFound from './components/NotFound.jsx';
 
 class Routes extends React.Component {
-    returnBool = (path, url, params, stopRender) => {
+    returnBool = (url, params) => {
         if(cookie.getCookie('user_id')) {
            return true; 
         } else return false;
     }
 
-    ifFalse = (path, url, params, stopRender) => {
-        if(path !== '/login') {
-            stopRender();
+    ifFalse = (url, params, blockRender) => {
+        if(url !== '/login') {
+            blockRender();
             alert('Please login first.');
             return window.location.href = '/login';
         }
     }
 
-    ifTrue = (path, url, params, stopRender) => {
-        if(path === '/login') {
+    ifTrue = (url, params, blockRender) => {
+        if(url === '/login') {
             alert('You are already signed in.');
             return window.location.href = '/';
         }
