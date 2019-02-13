@@ -4,6 +4,7 @@ const functions = require('../functions');
 const database = require('../database');
 const bodyParser = require('body-parser');
 const jsonParser = bodyParser.json();
+const rs = require('randomstring');
 
 router.post('/app', jsonParser, function(req, res, next) {
     const appname = req.body.appname;
