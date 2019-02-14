@@ -38,10 +38,10 @@ class Login extends React.Component {
             cookie.setCookie('user_id', res.data, 3);
             if(query.client_id && query.state && query.redirect_url && query.scope) {
                 if(window.confirm(`Do you allow this app to connect to your ${query.scope} data?`)) {
-                    window.location.href = `/auth?client_id=${query.clent_id}&state=${query.state}&scope=${query.scope}&redirect_url=${query.redirect_url}`;
+                    return window.location.href = `/auth?client_id=${query.clent_id}&state=${query.state}&scope=${query.scope}&redirect_url=${query.redirect_url}`;
                 } else {
                     alert('back to main page');
-                    window.location.href = '/';
+                    return window.location.href = '/';
                 }
             }
             window.location.href = '/';

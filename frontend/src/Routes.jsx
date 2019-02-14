@@ -36,7 +36,7 @@ class Routes extends React.Component {
         return (
             <Switch>
                 <NG path='/' exact={true} component={Home} returnBool={this.returnBool} ifFalse={this.ifFalse} ifTrue={this.ifTrue} />
-                <NG path='/auth' exact={true} component={Auth} returnBool={this.returnBool} ifFalse={this.ifFalse} ifTrue={this.ifTrue} />
+                <Route path='/auth' exact component={Auth} />
                 <NG path='/register' exact={true} component={Register} returnBool={this.returnBool} ifFalse={this.ifFalse} ifTrue={this.ifTrue} />
                 <NG path='/login' exact={true} component={MainLogin} returnBool={this.returnBool} ifFalse={this.ifFalse} ifTrue={this.ifTrue} />
                 <NG path='/token' exact={true} component={Token} returnBool={this.returnBool} ifFalse={this.ifFalse} ifTrue={this.ifTrue} />

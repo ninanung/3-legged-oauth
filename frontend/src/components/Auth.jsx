@@ -8,7 +8,9 @@ class Auth extends React.Component {
         const query = qs.parse(window.location.search);
         if(!query.client_id || !query.state || !query.redirect_url || !query.scope) {
             alert('invalid authorization');
-            return window.location.href = '/';
+            if(cookie.getCookie('user_id')) {
+                return window.location.href = '/';
+            } else return window.location.href = '/login';
         }
         if(!cookie.getCookie('user_id')) {
             const forLogin = qs.stringify({
