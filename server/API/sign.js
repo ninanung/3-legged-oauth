@@ -9,6 +9,24 @@ const rs = require('randomstring');
 router.post('/app', jsonParser, function(req, res, next) {
     const appname = req.body.appname;
     const redirect_url = req.body.redirect_url;
+    const user_id = req.body.user_id;
+    if(!appname || !redirect_url || !user_id) {
+        res.status(400).send('missing datas');
+    }
+    const app = {
+        appname,
+        user_id,
+        client_id: rs.generate(),
+        client_secret: rs.generate(),
+        redirect_url,
+        registered_user_ids: [],
+    }
+    database.apps.push(app);
+    res.send(database.apps);
+});
+
+router.get('/get/app', function(req, res, next) {
+    res.status(200).send(database.apps.slice());
 });
 
 router.post('/login', jsonParser, function(req, res, next) {

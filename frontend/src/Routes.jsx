@@ -8,6 +8,7 @@ import Auth from './components/Auth.jsx';
 import Register from './components/Register.jsx';
 import MainLogin from './components/MainLogin.jsx';
 import NotFound from './components/NotFound.jsx';
+import Token from './components/Token.jsx';
 
 class Routes extends React.Component {
     returnBool = (url, params) => {
@@ -34,11 +35,12 @@ class Routes extends React.Component {
     render() {
         return (
             <Switch>
-                <NG path='/' exact={true} component={Home} returnBool={this.returnBool} ifFalse={this.ifFalse} ifTrue={this.ifTrue}/>
-                <NG path='/auth' exact={true} component={Auth} returnBool={this.returnBool} ifFalse={this.ifFalse} ifTrue={this.ifTrue}/>
-                <NG path='/register' exact={true} component={Register} returnBool={this.returnBool} ifFalse={this.ifFalse} ifTrue={this.ifTrue}/>
-                <NG path='/login' exact={true} component={MainLogin} returnBool={this.returnBool} ifFalse={this.ifFalse} ifTrue={this.ifTrue}/>
-                <Route component={NotFound}/>
+                <NG path='/' exact={true} component={Home} returnBool={this.returnBool} ifFalse={this.ifFalse} ifTrue={this.ifTrue} />
+                <NG path='/auth' exact={true} component={Auth} returnBool={this.returnBool} ifFalse={this.ifFalse} ifTrue={this.ifTrue} />
+                <NG path='/register' exact={true} component={Register} returnBool={this.returnBool} ifFalse={this.ifFalse} ifTrue={this.ifTrue} />
+                <NG path='/login' exact={true} component={MainLogin} returnBool={this.returnBool} ifFalse={this.ifFalse} ifTrue={this.ifTrue} />
+                <NG path='/token' exact={true} component={Token} returnBool={this.returnBool} ifFalse={this.ifFalse} ifTrue={this.ifTrue} />
+                <Route component={NotFound} />
             </Switch>
         )
     }

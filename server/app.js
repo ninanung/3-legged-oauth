@@ -3,6 +3,7 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+const cors = require('cors');
 
 const auth = require('./API/auth');
 const get = require('./API/get');
@@ -17,6 +18,7 @@ const FileStore = require('session-file-store')(session);
 
 const app = express();
 
+app.use(cors({origin:"http://localhost:3002"}));
 app.use(session({
   secret: 'some secret',  // 암호화
   resave: false,
