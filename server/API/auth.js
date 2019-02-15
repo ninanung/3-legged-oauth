@@ -20,6 +20,7 @@ router.get('/app', function(req, res, next) {
             })
             res.cookie('state', state);
             res.cookie('code', code);
+            res.cookie('user_id', user_id);
             return res.send(`${redirect_url}?code=${code}&state=${state}`);
         }
     }
@@ -33,7 +34,7 @@ router.get('/token', function(req, res, next) {
     const client_id = query.client_id;
     const redirect_url = query.redirect_url;
     const client_secret = query.secret;
-    const user_id = query.user_id;
+    const user_id = req.cookies.user_id;
     for(let app of database.apps) {
         if(app.client_id === client_id && app.redirect_url === redirect_url && app.client_secret === client_secret) {
             if(req.cookies.state === state && req.cookies.code === code) {
@@ -45,6 +46,7 @@ router.get('/token', function(req, res, next) {
                 })
                 res.clearCookie('state');
                 res.clearCookie('code');
+                res.clearCookie('user_id');
                 return res.send(token);
             }
         }
