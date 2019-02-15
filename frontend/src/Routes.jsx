@@ -9,15 +9,26 @@ import Login from './component/Login';
 
 class Routes extends React.Component {
     returnBool = (url, params) => {
-        
+        if(!cookie.getCookie('token')) {
+            return false;
+        } else {
+            return true;
+        }
     }
 
     ifFalse = (url, params, blockRender) => {
-
+        blockRender();
+        if(url !== '/login') {
+            alert('Please login first');
+            window.location.href = '/login';
+        }
     }
 
     ifTrue = (url, params, blockRender) => {
-
+        if(url === '/login') {
+            alert('You already logged-in');
+            return window.location.href = '/';
+        }
     }
 
     render() {
@@ -25,7 +36,7 @@ class Routes extends React.Component {
             <Switch>
                 <NG exact={true} ifTrue={this.ifTrue} ifFalse={this.ifFalse} returnBool={this.returnBool} path='/' component={Home} />
                 <NG exact={true} ifTrue={this.ifTrue} ifFalse={this.ifFalse} returnBool={this.returnBool} path='/auth' component={Auth} />
-                <Route exact path='/login' component={Login} />
+                <NG exact={true} ifTrue={this.ifTrue} ifFalse={this.ifFalse} returnBool={this.returnBool} path='/login' component={Login} />
             </Switch>
         )
     }

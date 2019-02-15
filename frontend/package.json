@@ -5,6 +5,7 @@
   "dependencies": {
     "axios": "^0.18.0",
     "query-string": "^6.2.0",
+    "randomstring": "^1.1.5",
     "react": "^16.7.0",
     "react-dom": "^16.7.0",
     "react-navigation-guard": "^1.0.5",
