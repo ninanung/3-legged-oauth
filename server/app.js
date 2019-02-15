@@ -7,10 +7,8 @@ const cors = require('cors');
 
 const auth = require('./API/auth');
 const get = require('./API/get');
-const index = require('./API/index');
 const sign = require('./API/sign');
 
-const connectHistoryApiFallback = require('connect-history-api-fallback');
 const bodyParser = require('body-parser');
 
 const session = require('express-session');
@@ -18,7 +16,7 @@ const FileStore = require('session-file-store')(session);
 
 const app = express();
 
-app.use(cors({origin:"http://localhost:3002"}));
+app.use(cors({origin:"http://localhost:3000"}));
 app.use(session({
   secret: 'some secret',  // 암호화
   resave: false,
@@ -26,19 +24,13 @@ app.use(session({
   store: new FileStore()
 }));
 
-// view engine setup
-app.set('view engine', 'html');
-
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-app.use(connectHistoryApiFallback());
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'build')));
 
-app.use('/', index);
 app.use('/api/auth', auth);
 app.use('/api/get', get);
 app.use('/api/sign', sign);
