@@ -36,7 +36,16 @@ const users = [
     ],
 }
 */
-const apps = [];
+const apps = [
+    {
+        appname: 'test',
+        user_id: 'gMr66Rx9LwUSESGzwOHxwDf4oD3DHtHG',
+        client_id: '9x3bEdlVe9XS1fQ5P0BohJHbow88vO8X',
+        client_secret: 'VEJNF6HcuOWWpkRxB376bvqzK5pKhMza',
+        redirect_url: 'http://localhost:3001/login/auth',
+        registered_user_ids: [],
+    }
+];
 
 /*
 {
