@@ -1,14 +1,17 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import {BrowserRouter} from 'react-router-dom';
 import Routes from './Routes';
+
+import './App.css';
 
 class App extends Component {
   render() {
     return (
-      <BrowserRouter>
-        <Routes />
-      </BrowserRouter>
+      <div className='App'>
+        <BrowserRouter>
+          <Routes />
+        </BrowserRouter>
+      </div>
     );
   }
 }

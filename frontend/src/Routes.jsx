@@ -7,6 +7,16 @@ import Home from './component/Home';
 import Auth from './component/Auth';
 import Login from './component/Login';
 
+class NotFound extends React.Component {
+    render() {
+        return (
+            <div>
+                <h1>404 Not Found</h1>
+            </div>
+        )
+    }
+}
+
 class Routes extends React.Component {
     returnBool = (url, params) => {
         if(!cookie.getCookie('token')) {
@@ -17,8 +27,8 @@ class Routes extends React.Component {
     }
 
     ifFalse = (url, params, blockRender) => {
-        blockRender();
         if(url !== '/login') {
+            blockRender();
             alert('Please login first');
             window.location.href = '/login';
         }
@@ -35,8 +45,9 @@ class Routes extends React.Component {
         return (
             <Switch>
                 <NG exact={true} ifTrue={this.ifTrue} ifFalse={this.ifFalse} returnBool={this.returnBool} path='/' component={Home} />
-                <NG exact={true} ifTrue={this.ifTrue} ifFalse={this.ifFalse} returnBool={this.returnBool} path='/auth' component={Auth} />
+                <Route exact path='/login/auth' component={Auth} />
                 <NG exact={true} ifTrue={this.ifTrue} ifFalse={this.ifFalse} returnBool={this.returnBool} path='/login' component={Login} />
+                <Route component={NotFound} />
             </Switch>
         )
     }
