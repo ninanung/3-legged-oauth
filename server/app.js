@@ -16,7 +16,7 @@ const FileStore = require('session-file-store')(session);
 
 const app = express();
 
-app.use(cors({origin:"http://localhost:3000"}));
+app.use(cors({origin:"*"}));
 app.use(session({
   secret: 'some secret',  // 암호화
   resave: false,
