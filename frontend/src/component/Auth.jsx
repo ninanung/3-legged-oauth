@@ -34,7 +34,7 @@ class Auth extends React.Component {
                 return window.location.href = '/';
             })
             .catch(function(err) {
-                alert('authorization failed, please try again');
+                alert(err);
                 return window.location.href = '/login';
             })
         }
