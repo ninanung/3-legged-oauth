@@ -32,7 +32,7 @@ class Login extends React.Component {
             scope: this.state.scope,
             state: this.state.state,
         })
-        window.location.href = `http://localhost:3000/auth?${query}`
+        window.location.href = `http://localhost:3000/api/auth/app?${query}`
     }
 
     render() {
