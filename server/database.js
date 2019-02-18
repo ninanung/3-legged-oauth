@@ -30,6 +30,7 @@ const users = [
     redirect_url: '',
     registered_user_ids: [
         {
+            state: '',
             user_id: '',
             scope: '',
         }
