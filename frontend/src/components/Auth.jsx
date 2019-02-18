@@ -6,18 +6,17 @@ import axios from 'axios';
 class Auth extends React.Component {
     componentWillMount() {
         const query = qs.parse(window.location.search);
-        if(!query.client_id || !query.state || !query.redirect_url || !query.scope) {
+        if(!query.client_id || !query.state || !query.code || !query.scope || !query.redirect_url) {
             alert('invalid authorization');
-            if(cookie.getCookie('user_id')) {
-                return window.location.href = '/';
-            } else return window.location.href = '/login';
+            return window.location.href = '/notfound';
         }
         if(!cookie.getCookie('user_id')) {
             const forLogin = qs.stringify({
                 client_id: query.client_id,
                 state: query.state,
-                redirect_url: query.redirect_url,
+                code: query.code,
                 scope: query.scope,
+                redirect_url: query.redirect_url,
             })
             alert('please login for authorization');
             return window.location.href = `/login?${forLogin}`;
@@ -25,22 +24,31 @@ class Auth extends React.Component {
         const parsed = {
             client_id: query.client_id,
             user_id: cookie.getCookie('user_id'),
-            state: query.state,
             redirect_url: query.redirect_url,
             scope: query.scope,
+            state: query.state,
+            code: query.code,
         }
-        const url = `http://localhost:3002/api/auth/app?${qs.stringify(parsed)}`
+        const url = `http://localhost:3002/api/auth/register?${qs.stringify(parsed)}`
         axios({
             method: 'get',
             url,
         })
         .then(function(res) {
-            console.log(res.data);
-            return window.location.href = res.data;
+            if(res.data.registered) {
+                console.log(res.data);
+                return window.location.href = res.data.url;
+            }
+            if(window.confirm('You want to register your account to this App?')) {
+                console.log(res.data);
+                return window.location.href = res.data.url;
+            } else {
+                return window.location.href = '/';
+            }
         })
         .catch(function(err) {
             alert(err);
-            return window.location.href = '/';
+            return window.location.href = '/notfound';
         })
     }
 

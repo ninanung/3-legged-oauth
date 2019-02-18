@@ -36,13 +36,8 @@ class Login extends React.Component {
         })
         .then(function(res) {
             cookie.setCookie('user_id', res.data, 3);
-            if(query.client_id && query.state && query.redirect_url && query.scope) {
-                if(window.confirm(`Do you allow this app to connect to your ${query.scope} data?`)) {
-                    return window.location.href = `/auth?client_id=${query.client_id}&state=${query.state}&scope=${query.scope}&redirect_url=${query.redirect_url}`;
-                } else {
-                    alert('back to main page');
-                    return window.location.href = '/';
-                }
+            if(query.client_id && query.state && query.redirect_url && query.scope && query.code) {
+                return window.location.href = `/auth?client_id=${query.client_id}&state=${query.state}&scope=${query.scope}&redirect_url=${query.redirect_url}&code=${query.code}`;
             }
             window.location.href = '/';
         })
