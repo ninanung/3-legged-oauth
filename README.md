@@ -59,7 +59,7 @@ npm start
 
 2. Click the button "Login with Sample Service".  
 
-3. It will redirect you to `http://localhost:3000/auth` and if you didn't login to service, redirect you to `http://localhost:3000/login` again.  
+3. It will redirect you to `http://localhost:3002/api/auth/app` (api server) and if you didn't login to service, redirect you to `http://localhost:3000/login` again.  
 
 4. Please Login.  
 
@@ -67,4 +67,4 @@ npm start
 
 6. Now you authorized and client server got token.  
 
-7.
+7. Client server will show your email data when you login to client page.  
