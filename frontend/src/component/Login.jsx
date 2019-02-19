@@ -10,29 +10,27 @@ class Login extends React.Component {
             client_id: '',
             redirect_url: '',
             scope: '',
-            state: ''
         }
     }
 
     componentWillMount() {
-        const state = rs.generate();
         this.setState({
             client_id: '9x3bEdlVe9XS1fQ5P0BohJHbow88vO8X',
             redirect_url: 'http://localhost:3001/login/auth',
             scope: 'email',
-            state,
         })
-        cookie.setCookie('state', state, 1);
     }
 
     buttonClick = () => {
+        const state = rs.generate();
+        cookie.setCookie('newstate', state, 1);
         const query = qs.stringify({
             client_id: this.state.client_id,
             redirect_url: this.state.redirect_url,
             scope: this.state.scope,
-            state: this.state.state,
+            state,
         })
-        window.location.href = `http://localhost:3000/api/auth/app?${query}`
+        window.location.href = `http://localhost:3002/api/auth/app?${query}`
     }
 
     render() {

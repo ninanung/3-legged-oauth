@@ -14,7 +14,10 @@ class Auth extends React.Component {
             alert('unallowed connection');
             return window.location.href = '/';
         }
-        if(query.state !== cookie.getCookie('state')) {
+        if(query.state !== cookie.getCookie('newstate')) {
+            console.log(query.state);
+            console.log(cookie.getCookie('newstate'));
+            console.log(document.cookie);
             alert('invalid authorization');
             return window.location.href = '/';
         } else {
@@ -26,7 +29,7 @@ class Auth extends React.Component {
                 state: query.state,
             })
             axios({
-                method: 'get',
+                method: 'post',
                 url: `http://localhost:3002/api/auth/token?${queryString}`,
             })
             .then(function(res) {
