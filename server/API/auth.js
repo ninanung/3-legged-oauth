@@ -3,6 +3,9 @@ const router = express.Router();
 const database = require('../database');
 const rs = require('randomstring');
 
+let serverState = '';
+let serverCode = '';
+
 router.get('/app', function(req, res, next) {
     const query = req.query;
     const client_id = query.client_id;
@@ -13,15 +16,15 @@ router.get('/app', function(req, res, next) {
         const app = database.apps[i];
         if(app.client_id === client_id && app.redirect_url === redirect_url) {
             const code = rs.generate();
-            req.session.state = state;
-            req.session.code = code;
+            serverState = state;
+            serverCode = code;
             return res.redirect(`http://localhost:3000/auth?code=${code}&state=${state}&client_id=${client_id}&scope=${scope}&redirect_url=${redirect_url}`);
         }
     }
     return res.redirect(404, 'http://localhost:3000/notfound');
 })
 
-router.get('register', function(req, res, next) {
+router.get('/register', function(req, res, next) {
     const query = req.query;
     const code = query.code;
     const state = query.state;
@@ -39,7 +42,7 @@ router.get('register', function(req, res, next) {
                 if(user.user_id === user_id) {
                     user.state = state;
                     sendData.registered = true;
-                    return res.status(200).send(sendData);
+                    return res.status(200).json(sendData);
                 }
             }
             app.registered_user_ids.push({
@@ -47,13 +50,13 @@ router.get('register', function(req, res, next) {
                 user_id,
                 scope,
             })
-            return res.status(200).send(sendData);
+            return res.status(200).json(sendData);
         }
     }
     return res.redirect(404, 'http://localhost:3000/notfound')
 });
 
-router.get('/token', function(req, res, next) {
+router.post('/token', function(req, res, next) {
     const query = req.query;
     const code = query.code;
     const state = query.state;
@@ -63,7 +66,7 @@ router.get('/token', function(req, res, next) {
     let user_id = '';
     for(let app of database.apps) {
         if(app.client_id === client_id && app.redirect_url === redirect_url && app.client_secret === client_secret) {
-            if(req.session.state === state && req.session.code === code) {
+            if(serverState === state && serverCode === code) {
                 for(let user of app.registered_user_ids) {
                     if(user.state === state) {
                         user_id = user.user_id;
@@ -84,17 +87,11 @@ router.get('/token', function(req, res, next) {
                         user_id
                     })
                 }
-                req.session.destroy(function(err) {
-                    console.log(err);
-                })
-                return res.send(newToken);
+                return res.status(200).json(newToken);
             }
         }
     }
-    req.session.destroy(function(err) {
-        console.log(err);
-    })
-    return res.status(401).send({error: 'invalid request'});
+    return res.status(401).json({error: 'invalid request'});
 });
 
 module.exports = router;

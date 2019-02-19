@@ -10,20 +10,10 @@ const sign = require('./API/sign');
 
 const bodyParser = require('body-parser');
 
-const session = require('express-session');
-const FileStore = require('session-file-store')(session);
-
 const app = express();
+
 app.use(cookieParser());
-
 app.use(cors({origin:"*"}));
-app.use(session({
-  secret: 'some secret',  // 암호화
-  resave: false,
-  saveUninitialized: true,
-  store: new FileStore(),
-}));
-
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(logger('dev'));
